@@ -2,7 +2,7 @@
 """Draw the front page: THE WORLD IN ONE DAY - Thursday, 26 November 2026.
 
 A newspaper front page built only from Pillow primitives (no AI-generated
-text, no external images). 35 dated stories, 10 regions, 14 drawn scenes.
+text, no external images). 37 dated stories, 10 regions, 14 drawn scenes.
 Every claim is labelled with its source.
 """
 from PIL import Image, ImageDraw, ImageFont
@@ -104,12 +104,12 @@ def draw_balloon_scene(d, x, y, w, h):
            fill=(60, 60, 60), width=1)
     d.rectangle([bx + bw // 2 - 16, by + bh + 20, bx + bw // 2 + 16,
                  by + bh + 34], fill=(120, 72, 32), outline=(60, 40, 20))
-    # crowd
+    # crowd (kept whole inside the panel: figures end 6px above the edge)
     for i in range(12):
         px = x + 8 + i * 22
-        py = y + h - 12
+        py = y + h - 16
         d.ellipse([px, py - 7, px + 7, py], fill=(40, 40, 40))
-        d.rectangle([px - 1, py, px + 8, py + 10], fill=(40, 40, 40))
+        d.rectangle([px - 1, py, px + 8, py + 8], fill=(40, 40, 40))
     # wind lines
     for wy in (y + 30, y + 46):
         d.line([x + w - 120, wy, x + w - 88, wy], fill=(255, 255, 255), width=2)
@@ -274,8 +274,19 @@ def icon_trophy(d, x, y):
     d.line([x + 7, y + 18, x + 15, y + 18], fill=INK, width=2)
 
 
+def icon_crater(d, x, y):
+    # asteroid with a stadium-sized impact crater (Dimorphos, Hera images)
+    d.ellipse([x + 2, y + 2, x + 20, y + 20], fill=(150, 150, 150),
+              outline=INK)
+    d.ellipse([x + 7, y + 7, x + 16, y + 14], fill=(110, 110, 110),
+              outline=INK)
+    d.ellipse([x + 10, y + 10, x + 13, y + 12], fill=(80, 80, 80))
+    d.ellipse([x + 15, y + 15, x + 18, y + 18], fill=(120, 120, 120))
+
+
 ICONS = {"gavel": icon_gavel, "tanker": icon_tanker, "chart": icon_chart,
-         "satellite": icon_satellite, "trophy": icon_trophy}
+         "satellite": icon_satellite, "trophy": icon_trophy,
+         "crater": icon_crater}
 
 # ---------------------------------------------------------------- content
 LEAD = {
@@ -307,8 +318,8 @@ HEROES = [
      "is the first foreigner aboard Tiangong. Crew of 3.",
      "Reuters - BBC", draw_rocket),
     ("INDIA", "77 years of the Constitution",
-     "Constitution Day marks adoption on 26 Nov 1949. Delhi's "
-     "Rs 15,000-crore Nepal package, 8 MoUs, agreed 23 Nov.",
+     "Constitution Day marks adoption on 26 Nov 1949. Preamble read "
+     "in 23 languages; youth events in 786 districts.",
      "Indian press", draw_constitution),
     ("BANGLADESH", "Garment pay rises 36%",
      "Minimum wage to Tk 17,000 ($136) after weeks of protests shut "
@@ -326,14 +337,14 @@ BRIEF = [
     ("NIGERIA", "5 Mexicans held over $227m meth lab; actor Pete Edochie dies at 79", "BBC", None),
     ("ZIMBABWE", "Arrest warrant issued for Robert Mugabe's son", "BBC", None),
     ("SPAIN", "Kilmar Abrego Garcia lands in Spain, ending deportation battle", "BBC", None),
-    ("HORMUZ", "Tankers still burning; 37 ships hit in Oct; US fires on vessel", "Reuters", "tanker"),
+    ("HORMUZ", "Two tankers hit mines and catch fire, Iran says; 37 ships hit in Oct", "Reuters", "tanker"),
     ("MARKETS", "US stocks fall further as AI fears intensify", "BBC", "chart"),
     ("NVIDIA", "Jensen Huang returns as CEO to cheers; Trump brokered comeback", "BBC", None),
     ("HUAWEI", "Found guilty of stealing US trade secrets; cleared of racketeering", "Reuters", None),
-    ("ASTEROID", "NASA images show stadium-sized crater on asteroid hit for Earth's defence", "BBC", None),
+    ("ASTEROID", "Hera images show stadium-sized crater on asteroid hit for Earth's defence", "BBC", "crater"),
     ("SPACEX", "US authorises 1m satellites for data centres in space", "Reuters", "satellite"),
     ("US ECONOMY", "Q3 GDP revised sharply higher; jobless claims fall", "Reuters", None),
-    ("UK", "Record 5,258 heat deaths in summer 2026", "Reuters", None),
+    ("ENGLAND", "Record 5,258 heat deaths in summer 2026", "Reuters", None),
     ("GREECE", "General strike over wages and public services", "Reuters", None),
     ("IRAQ", "Top court: Baghdad may send troops to Kurdistan borders", "Reuters", None),
     ("LEBANON", "Second airport opening reflects political shifts", "Reuters", None),
@@ -362,7 +373,7 @@ def build():
     d.text((m, 62), "THURSDAY, 26 NOVEMBER 2026", font=font(SANSB, 16),
            fill=GOLD)
     draw_globe(d, W - 54, 46, 30)
-    d.text((W - 268, 66), "ALL THE NEWS THAT IS", font=font(SANS, 10),
+    d.text((W - 268, 66), "THE WORLD'S NEWS, IN ONE PAGE", font=font(SANS, 10),
            fill=(200, 210, 225))
 
     # strapline
@@ -435,8 +446,8 @@ def build():
     fy = 996
     d.line([m, fy, W - m, fy], fill=GREY, width=1)
     d.text((m, fy + 6),
-           "Sources: BBC - Reuters - AP - AFP - Indian press, as reported 26 Nov 2026. "
-           "All events happened or were first reported on 26 Nov 2026.",
+           "Sources: BBC - Reuters - AP - AFP - Indian press. "
+           "The day's news as reported on 26 Nov 2026.",
            font=font(SANS, 10), fill=GREY)
     d.text((m, fy + 19),
            "Drawn by hand in code (Pillow). No AI-generated text. "
