@@ -442,8 +442,8 @@ def build():
         fit_text(d, x0 + tag_w + 4, iy, item, font(SANS, 11),
                  ix + colw - x0 - tag_w - 8, 2, INK)
 
-    # footer
-    fy = 996
+    # footer (N1 fix: fy 996 -> 990 so line 2 sits fully inside the 1024 canvas)
+    fy = 990
     d.line([m, fy, W - m, fy], fill=GREY, width=1)
     d.text((m, fy + 6),
            "Sources: BBC - Reuters - AP - AFP - Indian press. "
