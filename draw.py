@@ -345,6 +345,8 @@ BRIEF = [
     ("MUSIC", "Duran Duran guitarist Andy Taylor dies aged 65", "BBC", None),
     ("CULTURE", "Jolie and Pitt settle legal battle over French winery", "BBC", None),
     ("OCEANIA", "Solomon Islands signs Australia security pact; no foreign base", "AP", None),
+    ("TAIWAN", "Mayoral polls on Saturday 'not about China', but Beijing watches", "Reuters", None),
+    ("WHITE HOUSE", "First Lady Melania Trump welcomes this year's Christmas tree", "BBC", None),
 ]
 
 # ---------------------------------------------------------------- layout
@@ -365,7 +367,7 @@ def build():
 
     # strapline
     d.rectangle([0, 92, W, 118], fill=(255, 255, 255), outline=(180, 180, 180))
-    d.text((m, 99), "35 dated stories  -  10 regions  -  14 drawn scenes  -  "
+    d.text((m, 99), "37 dated stories  -  10 regions  -  14 drawn scenes  -  "
                     "every claim source-labelled",
            font=font(SANSB, 13), fill=INK)
     d.text((W - 218, 99), "BBC - Reuters - AP - AFP",
@@ -408,7 +410,7 @@ def build():
     d.rectangle([m, by, W - m, by + 28], fill=INK)
     d.text((m + 8, by + 6), "THE WORLD IN BRIEF  -  26 NOVEMBER 2026",
            font=font(SANSB, 14), fill=(255, 255, 255))
-    d.text((W - 208, by + 8), "28 more stories, each labelled",
+    d.text((W - 208, by + 8), "30 more stories, each labelled",
            font=font(SANS, 11), fill=(220, 220, 220))
 
     # brief columns: 3 cols x 10 rows
@@ -438,7 +440,7 @@ def build():
            font=font(SANS, 10), fill=GREY)
     d.text((m, fy + 19),
            "Drawn by hand in code (Pillow). No AI-generated text. "
-           "35 stories - 10 regions - 14 drawn scenes.",
+           "37 stories - 10 regions - 14 drawn scenes.",
            font=font(SANS, 10), fill=GREY)
     return img
 
